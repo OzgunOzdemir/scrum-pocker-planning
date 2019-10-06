@@ -1,7 +1,7 @@
 'use strict';
 
 const routes = (app) => {
-    app.use('/posts', require('./api/example'));
+    app.use('/stories', require('./api/story'));
 }
 
 module.exports = routes;

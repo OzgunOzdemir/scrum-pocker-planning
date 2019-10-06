@@ -2,11 +2,15 @@ import axios from 'axios/index';
 
 const url = "http://localhost:9000";
 
-const getPosts = async () => {
-    const data = [];
-    await axios.get(url + '/posts')
+const addStory = async (data) => {
+    debugger;
+    const result = [];
+    await axios.post(url + '/stories', {
+        sessionName: data.sessionName,
+        voterCount: data.voterCount
+    })
         .then((response) => {
-            data.push(response.data);
+            result.push(response.data);
         })
         .catch((error) => {
             return {
@@ -16,8 +20,8 @@ const getPosts = async () => {
         })
     return {
         status: 'success',
-        data: data
+        data: result
     }
 }
 
-export { getPosts }
+export { addStory }

@@ -10,8 +10,19 @@ const cookieParser = require('cookie-parser');
 const cors = require('cors');
 const config = require('./config/environment');
 const passport = require('passport');
+const mongoose = require('mongoose');
 
 const app = express();
+
+//connect database
+mongoose.connect('mongodb://localhost/poker', { useNewUrlParser: true, useUnifiedTopology: true })
+mongoose.connection.on('open', () => {
+    console.log("MongoDB: Connected");
+});
+mongoose.connection.on('error', (err) => {
+    console.log(("MongoDB: Error", err))
+})
+
 // let staticPath = 'src';
 
 // if(config.env!=='development') {

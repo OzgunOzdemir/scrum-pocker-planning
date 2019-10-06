@@ -2,11 +2,10 @@
 
 const express = require('express');
 const router = express.Router();
-const controller = require("./example.controller");
-const route = require('../../utils/route.helper');
+const controller = require("./story.controller");
 
 // ********************* GET Routes ******************* //
-router.get('/', controller.getExample)
+router.post('/', controller.addStory)
 // ********************* GET Routes ******************* //
 
 

@@ -1,49 +1,93 @@
 import React, { Component } from 'react';
 import './StoryList.css';
 
+import { addStory } from '../../services/index';
+import { Loading } from '../../components/Ui/index'
+import { setTimeout } from 'timers';
+
 class StoryList extends Component {
 
-  handlerScrumMaster = () => {
-    this.props.history.push('/poker-planning-view-as-scrum-master')
+  constructor(props) {
+    super(props)
+
+    this.state = {
+      sessionName: null,
+      voterCount: null,
+      loadingShow: false
+    }
+  }
+
+  onChange = (e) => {
+    this.setState({
+      [e.target.name]: e.target.value
+    });
+  }
+
+
+  handlerScrumMaster = async () => {
+    if (!this.state.sessionName || !this.state.voterCount) {
+      return (
+        alert("Alanlar boş geçilemez")
+      )
+    }
+    if (this.state.voterCount == 0) {
+      return (
+        alert("Number of Voters alanı 0 olamaz")
+      )
+    }
+    this.setState({
+      loadingShow: true
+    })
+    setTimeout(async () => {
+      const result = await addStory(this.state);
+      if (result.status === "success") {
+        this.props.history.push('/poker-planning-view-as-scrum-master')
+      } else {
+        alert("Story kayıt işlemi başarılı olamadı.")
+      }
+      this.setState({
+        loadingShow: false
+      })
+    }, 3000);
   }
 
   render() {
     return (
       <React.Fragment>
-        <div className="row">
-          <div className="col-md-6 col-12">
-            <div className="row">
-              <div className="col-md-4 col-12">
-                <span className="form-title">Session Name:</span>
+          <div className="row">
+            <div className="col-md-6 col-12">
+              <div className="row">
+                <div className="col-md-4 col-12">
+                  <span className="form-title">Session Name:</span>
+                </div>
+                <div className="col-md-8 col-12">
+                  <input type="text" name="sessionName" id="sessionName" onChange={this.onChange} maxLength="200" placeholder="Please enter the session name"></input>
+                </div>
               </div>
-              <div className="col-md-8 col-12">
-                <input type="text" name="fname" placeholder="Please enter the session name"></input>
+            </div>
+            <div className="col-md-6 col-12">
+              <div className="row">
+                <div className="col-md-4 col-12">
+                  <span className="form-title">Number of Voters:</span>
+                </div>
+                <div className="col-md-8 col-12">
+                  <input type="number" name="voterCount" id="voterCount" onChange={this.onChange} placeholder="Please enter the number of voters"></input>
+                </div>
               </div>
             </div>
           </div>
-          <div className="col-md-6 col-12">
-            <div className="row">
-              <div className="col-md-4 col-12">
-                <span className="form-title">Number of Voters:</span>
-              </div>
-              <div className="col-md-8 col-12">
-                <input type="text" name="fname" placeholder="Please select the number of voters"></input>
-              </div>
+          <div className="row">
+            <div className="col-12 text-area-note">
+              <span>Paste your story list (Each line will be converted as a story)</span>
+            </div>
+            <div className="col-12">
+              <textarea rows="15" cols="50">
+              </textarea>
             </div>
           </div>
-        </div>
-        <div className="row">
-          <div className="col-12 text-area-note">
-            <span>Paste your story list (Each line will be converted as a story)</span>
+          <div className="button-container">
+            <button onClick={() => this.handlerScrumMaster()}>Start Session</button>
           </div>
-          <div className="col-12">
-            <textarea rows="15" cols="50">
-            </textarea>
-          </div>
-        </div>
-        <div className="button-container">
-          <button onClick={() => this.handlerScrumMaster()}>Start Session</button>
-        </div>
       </React.Fragment>
     );
   }
