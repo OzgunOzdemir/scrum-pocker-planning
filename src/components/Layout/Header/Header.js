@@ -1,10 +1,14 @@
 import React, { Component } from 'react'
+import './Header.css'
 
 class Header extends Component {
     render() {
         return (
-            <div>
-                <span>Scrum Poker</span>
+            <div className="header">
+                <div className="header-box">
+                    <span className="header-box-text">Scrum</span><br />
+                    <span className="header-box-text">Poker</span>
+                </div>
             </div>
         )
     }
