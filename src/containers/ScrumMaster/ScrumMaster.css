@@ -1,0 +1,64 @@
+.table-container {
+  margin-top: 10px;
+  border: 1px solid #cccccc;
+  height: 50vh;
+}
+
+table {
+  font-family: arial, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+td,
+th {
+  border: 1px solid #dddddd;
+  text-align: left;
+  padding: 8px;
+}
+
+tr:nth-child(even) {
+  background-color: #dddddd;
+}
+
+.active-story-container {
+    height: 50vh;
+    border: 1px solid #cccccc;
+    margin-top: 10px;
+    padding: 50px 5px 0 5px;
+}
+
+.vote-container {
+    border: 3px solid #000000;
+    padding: 1px;
+    text-align: center;
+}
+
+.colum-container {
+    margin-top: 30px;
+}
+
+.active-story-container-footer {
+    text-align: center;
+    font-size: 15px;
+    font-weight: 700;
+    margin-top: 50px;
+}
+
+.scrum-master-panel-container {
+    height: 50vh;
+    border: 1px solid #cccccc;
+    margin-top: 10px;
+    padding: 50px 5px 0 5px;
+}
+
+.voter-result-container {
+    margin-top: 10px;
+}
+
+.scrum-master-panel-container-footer {
+    text-align: center;
+    font-size: 15px;
+    font-weight: 700;
+    margin-top: 50px;
+}

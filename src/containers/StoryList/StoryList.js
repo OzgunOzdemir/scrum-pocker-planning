@@ -3,6 +3,10 @@ import './StoryList.css';
 
 class StoryList extends Component {
 
+  handlerScrumMaster = () => {
+    this.props.history.push('/poker-planning-view-as-scrum-master')
+  }
+
   render() {
     return (
       <React.Fragment>
@@ -38,7 +42,7 @@ class StoryList extends Component {
           </div>
         </div>
         <div className="button-container">
-          <button>Start Session</button>
+          <button onClick={() => this.handlerScrumMaster()}>Start Session</button>
         </div>
       </React.Fragment>
     );
