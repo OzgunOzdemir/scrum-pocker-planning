@@ -1,35 +1,19 @@
 import React, { Component } from 'react';
-import './Home.css';
-
-import { connect } from 'react-redux';
-import { updateExample } from '../../redux/actions/index';
-import { getPosts } from '../../services/index'
 
 class Home extends Component {
 
-  componentDidMount = async() => {
-    const result = await getPosts();
-    console.log(result)
-  }
+    handlerStart = () => {
+        this.props.history.push(`/poker-planning-add-story-list`);
+    }
 
-
-  render() {
-    return (
-      <div className="container">
-        <span>{this.props.example.name}</span>
-      </div>
-    );
-  }
+    render() {
+        return (
+            <div>
+                <span>Home Page</span>
+                <button onClick={() => this.handlerStart()} >Start</button>
+            </div>
+        );
+    }
 }
 
-const mapStateToProps = state => {
-  return ({
-    example: state.example
-  });
-}
-
-const mapDispatchToProps = {
-  onUpdateExample: updateExample
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(Home);
+export default Home;

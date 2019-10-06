@@ -1,2 +1,2 @@
 # scrum-pocker-planning
-Scrum Pocker Planning with React JS and Node JS.
+Scrum Poker Planning with React JS and Node JS.
