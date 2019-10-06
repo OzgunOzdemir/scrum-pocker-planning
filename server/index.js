@@ -8,7 +8,7 @@ require('./routes')(app);
 
 // Start server
 const startServer = () => {
-    app.listen(config.port, () => console.log('Scrum pocker planning listening on %d, in %s mode', config.port, config.env));
+    app.listen(config.port, () => console.log('Scrum poker planning listening on %d, in %s mode', config.port, config.env));
 }
 
 setImmediate(startServer);
