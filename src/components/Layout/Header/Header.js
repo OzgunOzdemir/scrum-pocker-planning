@@ -1,8 +1,7 @@
-import React, { Component } from 'react'
+import React from 'react'
 import './Header.css'
 
-class Header extends Component {
-    render() {
+const Header = () => {
         return (
             <div className="header">
                 <div className="header-box">
@@ -10,8 +9,7 @@ class Header extends Component {
                     <span className="header-box-text">Poker</span>
                 </div>
             </div>
-        )
-    }
+        );
 }
 
 export { Header }
