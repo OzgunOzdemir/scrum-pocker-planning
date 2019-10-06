@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import './Home.css'
 
 class Home extends Component {
 
@@ -8,9 +9,9 @@ class Home extends Component {
 
     render() {
         return (
-            <div>
-                <span>Home Page</span>
-                <button onClick={() => this.handlerStart()} >Start</button>
+            <div className="center">
+                <span className="home-title f30">Welcome at Scrum Pocker Planning</span>
+                <button className="home-button" onClick={() => this.handlerStart()}><span className="f20">Start</span></button>
             </div>
         );
     }
