@@ -124,7 +124,7 @@ class ScrumMaster extends Component {
               {
                 this.state.voters ?
                   this.state.voters.map((item, i) => 
-                    <div className="voter-result-container">
+                    <div key={i} className="voter-result-container">
                       <span>{item.voterName} : {item.score}</span>
                     </div>
                   )
@@ -142,7 +142,7 @@ class ScrumMaster extends Component {
                     placeholder="Final Score"
                   ></input> : null
                 }
-                <button onClick={() => this.handlerFinalScore()}>End Waiting For Story </button>
+                <br /><button onClick={() => this.handlerFinalScore()}>End Waiting For Story </button>
               </div>
             </div>
           </div>
