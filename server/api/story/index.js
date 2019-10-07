@@ -15,6 +15,7 @@ router.post('/', controller.addStory)
 
 // ********************* PUT Routes ******************* //
 router.put('/updateStatus/:id', controller.updateStoryByStatus)
+router.put('/updateFinalScore/:id', controller.updateFinalScoreById)
 // ********************* PUT Routes ******************* //
 
 

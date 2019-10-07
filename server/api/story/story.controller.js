@@ -38,6 +38,17 @@ const updateStoryByStatus = (req, res) => {
   );
 };
 
+const updateFinalScoreById = (req, res) => {
+  Story.findByIdAndUpdate(
+    req.params.id,
+    { finalScore: req.body.finalScore, status: "Voted" },
+    (err, data) => {
+      if (err) console.log(err);
+      res.json(data);
+    }
+  );
+};
+
 // ********************* GET Modules *******************//
 module.exports.getStory = getStory;
 module.exports.getStoryById = getStoryById;
@@ -49,4 +60,5 @@ module.exports.addStory = addStory;
 
 // ********************* PUT Modules *******************//
 module.exports.updateStoryByStatus = updateStoryByStatus;
+module.exports.updateFinalScoreById = updateFinalScoreById;
 // ********************* PUT Modules *******************//
