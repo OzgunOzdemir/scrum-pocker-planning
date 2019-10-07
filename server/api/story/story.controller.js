@@ -1,4 +1,11 @@
-const Story = require('../../models/Story');
+const Story = require("../../models/Story");
+
+const getStory = (req, res) => {
+  Story.find({}, function(err, data) {
+    if (err) console.log(err);
+    res.json(data);
+  });
+};
 
 const addStory = (req, res) => {
   const story = new Story({
@@ -8,12 +15,15 @@ const addStory = (req, res) => {
   });
 
   story.save((err, data) => {
-    if (err)
-      console.log(err);
+    if (err) console.log(err);
     res.json(data);
-  })
-}
+  });
+};
 
 // ********************* GET Modules *******************//
-module.exports.addStory = addStory;
+module.exports.getStory = getStory;
 // ********************* GET Modules *******************//
+
+// ********************* POST Modules *******************//
+module.exports.addStory = addStory;
+// ********************* POST Modules *******************//
