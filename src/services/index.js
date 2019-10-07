@@ -41,6 +41,24 @@ const getStory = async () => {
     }
 }
 
+const getStoryById = async (id) => {
+    const result = [];
+    await axios.get(url + '/stories/' + id)
+        .then((response) => {
+            result.push(response.data);
+        })
+        .catch((error) => {
+            return {
+                status: 'error',
+                message: error.response.data
+            }
+        })
+    return {
+        status: 'success',
+        data: result[0]
+    }
+}
+
 const updateStoryByStatus = async (id) => {
     const result = [];
     await axios.put(url + '/stories/updateStatus/' + id)
@@ -60,4 +78,4 @@ const updateStoryByStatus = async (id) => {
     }
 }
 
-export { addStory, getStory, updateStoryByStatus }
+export { addStory, getStory, updateStoryByStatus, getStoryById }

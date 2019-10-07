@@ -6,6 +6,7 @@ const controller = require("./story.controller");
 
 // ********************* GET Routes ******************* //
 router.get('/', controller.getStory)
+router.get('/:id', controller.getStoryById)
 // ********************* GET Routes ******************* //
 
 // ********************* POST Routes ******************* //

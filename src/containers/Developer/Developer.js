@@ -1,10 +1,10 @@
-import React, { Component } from 'react';
-import './Developer.css';
+import React, { Component } from "react";
+import "./Developer.css";
 
-import { Vote } from '../../components/App/index';
-import { Table } from '../../components/Ui/index';
+import { Vote } from "../../components/App/index";
+import { Table } from "../../components/Ui/index";
 import queryString from "query-string";
-import { updateStoryByStatus } from '../../services/index'
+import { updateStoryByStatus, getStoryById } from "../../services/index";
 
 class Developer extends Component {
   constructor(props) {
@@ -15,19 +15,23 @@ class Developer extends Component {
     };
   }
 
-  componentDidMount = async() => {
+  componentDidMount = async () => {
     const values = queryString.parse(this.props.location.search);
     if (values.id) {
       this.setState({
         urlId: values.id
       });
-      const result = await updateStoryByStatus(values.id)
-      if(result.status === "error" ){
-        alert("Story güncellenemedi")
+      const getStory = await getStoryById(values.id);
+      if (getStory.status === "success") {
+        if (getStory.data[0].status !== "Active") {
+          const result = await updateStoryByStatus(values.id);
+          if (result.status === "error") {
+            alert("Story güncellenemedi");
+          }
+        }
       }
-      
     } else {
-      alert("Story bulunamadı lütfen tekrardan giriş yapınız! ")
+      alert("Story bulunamadı lütfen tekrardan giriş yapınız! ");
     }
   };
 
@@ -39,7 +43,7 @@ class Developer extends Component {
           <Table />
         </div>
         <div className="col-lg-4 col-12">
-          <div>Active Story ( Story 1 )</div>
+          <div>Active Story</div>
           <Vote />
         </div>
       </div>

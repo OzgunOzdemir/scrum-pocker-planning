@@ -6,9 +6,9 @@ const Vote = () => {
         <div className="vote-container">
             <div className="row colum-container">
                 <div className="col-3"><div className="vote-container-point">1</div></div>
-                <div className="col-3"><div className="vote-container-point">1</div></div>
-                <div className="col-3"><div className="vote-container-point">1</div></div>
-                <div className="col-3"><div className="vote-container-point">1</div></div>
+                <div className="col-3"><div className="vote-container-point">2</div></div>
+                <div className="col-3"><div className="vote-container-point">3</div></div>
+                <div className="col-3"><div className="vote-container-point">5</div></div>
             </div>
             <div className="row colum-container">
                 <div className="col-3"><div className="vote-container-point">8</div></div>
