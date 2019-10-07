@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import "./Developer.css";
 
 import { Vote } from "../../components/App/index";
-import { Table } from "../../components/Ui/index";
+import { Table, Loading } from "../../components/Ui/index";
 import queryString from "query-string";
 import {
   updateStoryByStatus,
@@ -18,7 +18,8 @@ class Developer extends Component {
     this.state = {
       urlId: null,
       story: null,
-      footerScore: null
+      footerScore: null,
+      loadingShow: false,
     };
   }
 
@@ -30,7 +31,6 @@ class Developer extends Component {
       });
       const getStory = await getStoryById(values.id);
       if (getStory.status === "success") {
-        debugger;
         this.setState({
           story: getStory.data[0]
         });
@@ -40,7 +40,7 @@ class Developer extends Component {
             alert("Story güncellenemedi");
           }
         }
-      }else{
+      } else {
         alert("Story bulunamadı lütfen tekrardan giriş yapınız! ");
       }
     } else {
@@ -49,22 +49,44 @@ class Developer extends Component {
   };
 
   handlerToVote = async item => {
-    const getVoter = await getVoterBySessionName(this.state.story.sessionName);
-    if (getVoter.data.length < this.state.story.voterCount) {
-      const data = {
-        sessionName: this.state.story.sessionName,
-        voterName: "Voter" + ' ' + (getVoter.data.length + 1),
-        score: parseInt(item)
-      };
-      const result = await addVoter(data);
-      if(result.status === "success"){
+    this.setState({
+      loadingShow: true
+    })
+    setTimeout(async () => {
+      const localStorageData = localStorage.getItem(this.state.story._id);
+      if (localStorageData !== "true") {
+        const getVoter = await getVoterBySessionName(this.state.story.sessionName);
+        if (getVoter.data.length < this.state.story.voterCount) {
+          const data = {
+            sessionName: this.state.story.sessionName,
+            voterName: "Voter" + ' ' + (getVoter.data.length + 1),
+            score: parseInt(item)
+          };
+          const result = await addVoter(data);
+          if (result.status === "success") {
+            this.setState({
+              footerScore: result.data.score,
+              loadingShow: false
+            })
+            localStorage.setItem(this.state.story._id, true)
+          }else{
+            this.setState({
+              loadingShow: false
+            })
+          }
+        } else {
+          this.setState({
+            loadingShow: false
+          })
+          alert("Planlama maximum kişi sayısına ulaşmıştır.");
+        }
+      } else {
         this.setState({
-          footerScore: result.data.score
+          loadingShow: false
         })
+        alert("Sadece bir oy verebilirsiniz");
       }
-    } else {
-      alert("Planlama maximum kiş sayısına ulaşmıştır.");
-    }
+    }, 2000);
   };
 
   render() {
@@ -76,8 +98,13 @@ class Developer extends Component {
         </div>
         <div className="col-lg-4 col-12">
           <div>Active Story</div>
-          <Vote onClick={this.handlerToVote} footerScore={this.state.footerScore}/>
+          <Vote onClick={this.handlerToVote} footerScore={this.state.footerScore} />
         </div>
+        {this.state.loadingShow === true ? (
+          <Loading show={this.state.loadingShow} />
+        ) : (
+            ""
+          )}
       </div>
     );
   }

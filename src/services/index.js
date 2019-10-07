@@ -56,7 +56,6 @@ const getStoryById = async id => {
         message: error.response.data
       };
     });
-    debugger;
   return {
     status: "success",
     data: result[0]
