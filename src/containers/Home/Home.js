@@ -9,9 +9,9 @@ class Home extends Component {
 
     render() {
         return (
-            <div className="center">
-                <span className="home-title f30">Welcome at Scrum Pocker Planning</span>
-                <button className="home-button" onClick={() => this.handlerStart()}><span className="f20">Start</span></button>
+            <div className="welcome-container">
+                <span className="home-title">Welcome at Scrum Pocker Planning</span>
+                <button className="home-button" onClick={() => this.handlerStart()}><span className="home-button-text">Start</span></button>
             </div>
         );
     }
