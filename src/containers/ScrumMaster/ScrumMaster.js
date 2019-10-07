@@ -10,7 +10,8 @@ class ScrumMaster extends Component {
     super(props);
 
     this.state = {
-      urlId: null
+      urlId: null,
+      footerScore: null
     };
   }
 
@@ -24,6 +25,10 @@ class ScrumMaster extends Component {
       this.props.history.push(`/poker-planning-add-story-list`);
     }
   };
+
+  handlerToVote = (item) => {
+    debugger;
+  }
 
   render() {
     return (
@@ -39,7 +44,7 @@ class ScrumMaster extends Component {
           </div>
           <div className="col-lg-3 col-12">
             <div>Active Story ( Story 1 )</div>
-            <Vote />
+            <Vote  onClick={this.handlerToVote} footerScore={this.state.footerScore}/>
           </div>
           <div className="col-lg-3 col-12">
             <div>Scrum Master Panel</div>
