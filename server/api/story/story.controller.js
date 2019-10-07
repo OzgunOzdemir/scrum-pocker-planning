@@ -7,6 +7,13 @@ const getStory = (req, res) => {
   });
 };
 
+const getStoryById = (req, res) => {
+  Story.find({_id: req.params.id}, function(err, data) {
+    if (err) console.log(err);
+    res.json(data);
+  });
+}
+
 const addStory = (req, res) => {
   const story = new Story({
     sessionName: req.body.sessionName,
@@ -21,7 +28,7 @@ const addStory = (req, res) => {
 };
 
 const updateStoryByStatus = (req, res) => {
-  Story.findOneAndUpdate(
+  Story.findByIdAndUpdate(
     req.params.id,
     { status: "Active" },
     (err, data) => {
@@ -33,6 +40,7 @@ const updateStoryByStatus = (req, res) => {
 
 // ********************* GET Modules *******************//
 module.exports.getStory = getStory;
+module.exports.getStoryById = getStoryById;
 // ********************* GET Modules *******************//
 
 // ********************* POST Modules *******************//

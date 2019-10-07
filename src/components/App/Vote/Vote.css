@@ -9,9 +9,15 @@
     border: 3px solid #000000;
     padding: 1px;
     text-align: center;
+    cursor: pointer;
+    margin-top: 30px;
 }
 
-.colum-container {
+.vote-container-point:hover {
+    border: 3px solid #28a745;
+    padding: 1px;
+    text-align: center;
+    cursor: pointer;
     margin-top: 30px;
 }
 
@@ -20,4 +26,12 @@
     font-size: 15px;
     font-weight: 700;
     margin-top: 50px;
+}
+
+.vote-footer-active {
+    text-align: center;
+    font-size: 15px;
+    font-weight: 700;
+    margin-top: 50px;
+    color: #28a745
 }
