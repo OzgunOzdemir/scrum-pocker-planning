@@ -56,10 +56,16 @@ class Developer extends Component {
       const localStorageData = localStorage.getItem(this.state.story._id);
       if (localStorageData !== "true") {
         const getVoter = await getVoterBySessionName(this.state.story.sessionName);
-        if (getVoter.data.length < this.state.story.voterCount) {
+        let notScrumMaster = []
+        for (let index = 0; index < getVoter.data.length; index++) {
+          if(getVoter.data[index].voterName && getVoter.data[index].voterName !== "Scrum Master"){
+            notScrumMaster.push(getVoter.data[index])
+          }   
+        }
+        if (notScrumMaster.length < this.state.story.voterCount - 1) {
           const data = {
             sessionName: this.state.story.sessionName,
-            voterName: "Voter" + ' ' + (getVoter.data.length + 1),
+            voterName: "Voter" + ' ' + (notScrumMaster.length + 1),
             score: parseInt(item)
           };
           const result = await addVoter(data);

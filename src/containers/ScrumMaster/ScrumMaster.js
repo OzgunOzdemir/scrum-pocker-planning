@@ -4,7 +4,7 @@ import "./ScrumMaster.css";
 import { Vote } from "../../components/App/index";
 import { Table, Loading } from "../../components/Ui/index";
 import queryString from "query-string";
-import { getStoryById, addVoter } from '../../services/index';
+import { getStoryById, addVoter, getVoterBySessionName } from '../../services/index';
 
 class ScrumMaster extends Component {
   constructor(props) {
@@ -15,6 +15,8 @@ class ScrumMaster extends Component {
       footerScore: null,
       story: null,
       loadingShow: false,
+      voters: null,
+      finalScore: null
     };
   }
 
@@ -29,6 +31,12 @@ class ScrumMaster extends Component {
         this.setState({
           story: getStory.data[0]
         });
+        setInterval(async () => {
+          const getVoter = await getVoterBySessionName(getStory.data[0].sessionName);
+          this.setState({
+            voters: getVoter.data
+          })
+        }, 5000);
       } else {
         alert("Story bulunamadı lütfen tekrardan giriş yapınız! ");
       }
@@ -78,6 +86,16 @@ class ScrumMaster extends Component {
     }, 2000);
   }
 
+  onChange = e => {
+    this.setState({
+      [e.target.name]: e.target.value
+    });
+  };
+
+  handlerFinalScore = () => {
+    
+  }
+
   render() {
     return (
       <div>
@@ -97,24 +115,28 @@ class ScrumMaster extends Component {
           <div className="col-lg-3 col-12">
             <div>Scrum Master Panel</div>
             <div className="scrum-master-panel-container">
-              <div>Scrum 1 is active</div>
-              <div className="voter-result-container">
-                <span>Voter 1 : Voted</span>
-              </div>
-              <div className="voter-result-container">
-                <span>Voter 2 : Not Voted</span>
-              </div>
-              <div className="voter-result-container">
-                <span>Voter 3 : Voted</span>
-              </div>
-              <div className="voter-result-container">
-                <span>Voter 4 : Not Voted</span>
-              </div>
-              <div className="voter-result-container">
-                <span>Scrum Master : Not Voted</span>
-              </div>
+              {
+                this.state.voters ?
+                  this.state.voters.map((item, i) => 
+                    <div className="voter-result-container">
+                      <span>{item.voterName} : {item.score}</span>
+                    </div>
+                  )
+                  : null
+              }
               <div className="scrum-master-panel-container-footer">
-                <button>End Waiting For Story 1</button>
+                {
+                  ( this.state.story && this.state.voters ) && ( this.state.story.voterCount ===  this.state.voters.length ) ? 
+                  <input
+                    className="final-score"
+                    type="number"
+                    name="finalScore"
+                    id="finalScore"
+                    onChange={this.onChange}
+                    placeholder="Final Score"
+                  ></input> : null
+                }
+                <button onClick={() => this.handlerFinalScore}>End Waiting For Story </button>
               </div>
             </div>
           </div>
