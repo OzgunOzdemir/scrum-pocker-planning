@@ -123,11 +123,33 @@ const addVoter = async data => {
   };
 };
 
+const updateStoryByFinalScore = async (id, finalScore) => {
+  const result = [];
+  await axios
+    .put(url + "/stories/updateFinalScore/" + id, {
+      finalScore: finalScore
+    })
+    .then(response => {
+      result.push(response.data);
+    })
+    .catch(error => {
+      return {
+        status: "error",
+        message: error.response.data
+      };
+    });
+  return {
+    status: "success",
+    data: result[0]
+  };
+};
+
 export {
   addStory,
   getStory,
   updateStoryByStatus,
   getStoryById,
   getVoterBySessionName,
-  addVoter
+  addVoter,
+  updateStoryByFinalScore
 };

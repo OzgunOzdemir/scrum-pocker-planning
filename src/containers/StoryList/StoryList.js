@@ -45,7 +45,11 @@ class StoryList extends Component {
       loadingShow: true
     });
     setTimeout(async () => {
-      const result = await addStory(this.state);
+      const data = {
+        sessionName: this.state.sessionName,
+        voterCount: this.state.voterCount
+      }
+      const result = await addStory(data);
       if (result.status === "success") {
         let queryString = "id=" + result.data._id;
         this.props.history.push(`/poker-planning-view-as-scrum-master?${queryString}`);
@@ -55,7 +59,7 @@ class StoryList extends Component {
       this.setState({
         loadingShow: false
       });
-    }, 3000);
+    }, 2000);
   };
 
   render() {

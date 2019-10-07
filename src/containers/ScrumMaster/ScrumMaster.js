@@ -4,7 +4,7 @@ import "./ScrumMaster.css";
 import { Vote } from "../../components/App/index";
 import { Table, Loading } from "../../components/Ui/index";
 import queryString from "query-string";
-import { getStoryById, addVoter, getVoterBySessionName } from '../../services/index';
+import { getStoryById, addVoter, getVoterBySessionName, updateStoryByFinalScore } from '../../services/index';
 
 class ScrumMaster extends Component {
   constructor(props) {
@@ -36,7 +36,7 @@ class ScrumMaster extends Component {
           this.setState({
             voters: getVoter.data
           })
-        }, 5000);
+        }, 2000);
       } else {
         alert("Story bulunamadı lütfen tekrardan giriş yapınız! ");
       }
@@ -92,8 +92,14 @@ class ScrumMaster extends Component {
     });
   };
 
-  handlerFinalScore = () => {
-    
+  handlerFinalScore = async() => {
+    if(!this.state.finalScore) {
+      return alert("Final Score alanı boş")
+    }
+    const result = await updateStoryByFinalScore(this.state.urlId,this.state.finalScore);
+    if(result.status === "success") {
+      alert("story başarılı bir şekilde tamamlanmıştır.")
+    }
   }
 
   render() {
@@ -136,7 +142,7 @@ class ScrumMaster extends Component {
                     placeholder="Final Score"
                   ></input> : null
                 }
-                <button onClick={() => this.handlerFinalScore}>End Waiting For Story </button>
+                <button onClick={() => this.handlerFinalScore()}>End Waiting For Story </button>
               </div>
             </div>
           </div>
