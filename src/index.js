@@ -1,7 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './App';
-import './assets/Css/common.css';
 import './assets/Css/bootstrap-grid.css';
 import * as serviceWorker from './serviceWorker';
 
