@@ -27,15 +27,6 @@ class StoryList extends Component {
       alert("Story veritabanından çekilemedi.");
     }
   }
-  
-
-  // componentWillUnmount = () => {
-  //   this.setState({
-  //     sessionName: null,
-  //     voterCount: null,
-  //     loadingShow: false
-  //   })
-  // }
 
   onChange = e => {
     this.setState({
@@ -56,7 +47,8 @@ class StoryList extends Component {
     setTimeout(async () => {
       const result = await addStory(this.state);
       if (result.status === "success") {
-        this.props.history.push("/poker-planning-view-as-scrum-master");
+        let queryString = "id=" + result.data._id;
+        this.props.history.push(`/poker-planning-view-as-scrum-master?${queryString}`);
       } else {
         alert("Story kayıt işlemi başarılı olamadı.");
       }

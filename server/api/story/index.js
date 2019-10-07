@@ -12,5 +12,9 @@ router.get('/', controller.getStory)
 router.post('/', controller.addStory)
 // ********************* POST Routes ******************* //
 
+// ********************* PUT Routes ******************* //
+router.put('/updateStatus/:id', controller.updateStoryByStatus)
+// ********************* PUT Routes ******************* //
+
 
 module.exports = router;

@@ -14,7 +14,7 @@ const addStory = async (data) => {
         .catch((error) => {
             return {
                 status: 'error',
-                message: error.response.data.error.message
+                message: error.response.data
             }
         })
     return {
@@ -32,7 +32,7 @@ const getStory = async () => {
         .catch((error) => {
             return {
                 status: 'error',
-                message: error.response.data.error.message
+                message: error.response.data
             }
         })
     return {
@@ -41,4 +41,23 @@ const getStory = async () => {
     }
 }
 
-export { addStory, getStory }
+const updateStoryByStatus = async (id) => {
+    const result = [];
+    await axios.put(url + '/stories/updateStatus/' + id)
+        .then((response) => {
+            result.push(response.data);
+        })
+        .catch((error) => {
+            debugger;
+            return {
+                status: 'error',
+                message: error.response.data
+            }
+        })
+    return {
+        status: 'success',
+        data: result[0]
+    }
+}
+
+export { addStory, getStory, updateStoryByStatus }

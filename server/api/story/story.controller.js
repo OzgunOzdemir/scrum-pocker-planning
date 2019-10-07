@@ -20,6 +20,17 @@ const addStory = (req, res) => {
   });
 };
 
+const updateStoryByStatus = (req, res) => {
+  Story.findOneAndUpdate(
+    req.params.id,
+    { status: "Active" },
+    (err, data) => {
+      if (err) console.log(err);
+      res.json(data);
+    }
+  );
+};
+
 // ********************* GET Modules *******************//
 module.exports.getStory = getStory;
 // ********************* GET Modules *******************//
@@ -27,3 +38,7 @@ module.exports.getStory = getStory;
 // ********************* POST Modules *******************//
 module.exports.addStory = addStory;
 // ********************* POST Modules *******************//
+
+// ********************* PUT Modules *******************//
+module.exports.updateStoryByStatus = updateStoryByStatus;
+// ********************* PUT Modules *******************//
