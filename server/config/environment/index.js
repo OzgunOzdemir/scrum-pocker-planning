@@ -6,8 +6,7 @@ process.env.PORT = 9000;    //You can set port for development environment in .e
 
 const config = {
     env: process.env.NODE_ENV,
-    port: process.env.PORT,
-    remote: { url: 'https://jsonplaceholder.typicode.com', timeout: 300000 }
+    port: process.env.PORT
 };
 
 module.exports = lodash.merge(config, require(`./${process.env.NODE_ENV}.js`) || {});

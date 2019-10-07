@@ -2,8 +2,9 @@ import React, { Component } from "react";
 import "./ScrumMaster.css";
 
 import { Vote } from "../../components/App/index";
-import { Table } from "../../components/Ui/index";
+import { Table, Loading } from "../../components/Ui/index";
 import queryString from "query-string";
+import { getStoryById, addVoter } from '../../services/index';
 
 class ScrumMaster extends Component {
   constructor(props) {
@@ -11,23 +12,70 @@ class ScrumMaster extends Component {
 
     this.state = {
       urlId: null,
-      footerScore: null
+      footerScore: null,
+      story: null,
+      loadingShow: false,
     };
   }
 
-  componentDidMount = () => {
+  componentDidMount = async () => {
     const values = queryString.parse(this.props.location.search);
     if (values.id) {
       this.setState({
         urlId: values.id
       });
+      const getStory = await getStoryById(values.id);
+      if (getStory.status === "success") {
+        this.setState({
+          story: getStory.data[0]
+        });
+      } else {
+        alert("Story bulunamadı lütfen tekrardan giriş yapınız! ");
+      }
     } else {
       this.props.history.push(`/poker-planning-add-story-list`);
     }
   };
 
   handlerToVote = (item) => {
-    debugger;
+    this.setState({
+      loadingShow: true
+    })
+    setTimeout(async () => {
+      const getStory = await getStoryById(this.state.story._id);
+      if (getStory.status === "success") {
+        this.setState({
+          story: getStory.data[0]
+        });
+      } else {
+        alert("Story bulunamadı lütfen tekrardan giriş yapınız! ");
+      }
+      const localStorageData = localStorage.getItem("Scrum Master" + this.state.story._id);
+      if (localStorageData !== "true" && this.state.story.status === "Active") {
+        const data = {
+          sessionName: this.state.story.sessionName,
+          voterName: "Scrum Master",
+          score: parseInt(item)
+        };
+        const result = await addVoter(data);
+        if (result.status === "success") {
+          this.setState({
+            footerScore: result.data.score,
+            loadingShow: false
+          })
+          localStorage.setItem("Scrum Master" + this.state.story._id, true)
+        } else {
+          this.setState({
+            loadingShow: false
+          })
+        }
+      } else {
+        this.setState({
+          loadingShow: false
+        })
+        alert("Story Active değildir veya Scrum Master oyunu kullanmıştır.");
+      }
+    }, 2000);
   }
 
   render() {
@@ -35,7 +83,7 @@ class ScrumMaster extends Component {
       <div>
         <div className="developer-share-link">
           <span>Please share link of developers panel to the teammates :  </span>
-          <a href="#">http://localhost:3000/poker-planning-view-as-developer?id={this.state.urlId}</a>
+          <a href="/#">http://localhost:3000/poker-planning-view-as-developer?id={this.state.urlId}</a>
         </div>
         <div className="row">
           <div className="col-lg-6 col-12">
@@ -43,8 +91,8 @@ class ScrumMaster extends Component {
             <Table />
           </div>
           <div className="col-lg-3 col-12">
-            <div>Active Story ( Story 1 )</div>
-            <Vote  onClick={this.handlerToVote} footerScore={this.state.footerScore}/>
+            <div>Active Story</div>
+            <Vote onClick={this.handlerToVote} footerScore={this.state.footerScore} />
           </div>
           <div className="col-lg-3 col-12">
             <div>Scrum Master Panel</div>
@@ -71,6 +119,11 @@ class ScrumMaster extends Component {
             </div>
           </div>
         </div>
+        {this.state.loadingShow === true ? (
+          <Loading show={this.state.loadingShow} />
+        ) : (
+            ""
+          )}
       </div>
     );
   }
