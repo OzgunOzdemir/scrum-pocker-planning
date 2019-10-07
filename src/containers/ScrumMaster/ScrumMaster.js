@@ -35,7 +35,7 @@ class ScrumMaster extends Component {
       <div>
         <div className="developer-share-link">
           <span>Please share link of developers panel to the teammates :  </span>
-          <a href="#">http://localhost:3000/poker-planning-view-as-developer?id={this.state.urlId}</a>
+          <a href="/#">http://localhost:3000/poker-planning-view-as-developer?id={this.state.urlId}</a>
         </div>
         <div className="row">
           <div className="col-lg-6 col-12">
