@@ -65,7 +65,7 @@ class Developer extends Component {
         if (notScrumMaster.length < this.state.story.voterCount - 1) {
           const data = {
             sessionName: this.state.story.sessionName,
-            voterName: "Voter" + ' ' + (notScrumMaster.length + 1),
+            voterName: `Voter ${notScrumMaster.length +1}`,
             score: parseInt(item)
           };
           const result = await addVoter(data);

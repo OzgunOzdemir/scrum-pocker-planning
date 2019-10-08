@@ -23,23 +23,12 @@ mongoose.connection.on('error', (err) => {
     console.log(("MongoDB: Error", err))
 })
 
-// let staticPath = 'src';
-
-// if(config.env!=='development') {
-//     app.set('trust proxy', 1);
-//     app.use(morgan('tiny'));
-//     staticPath = 'src';
-// } else {
-//     app.use(morgan('dev'));
-// }
-
 app.use(cors())
 app.use(helmet());
 app.use(compression());
 app.use(express.json());
 app.use(methodOverride());
 app.use(cookieParser());
-// app.use(express.static(path.join(config.root, staticPath)));
 app.use(passport.initialize());
 
 module.exports = app;
